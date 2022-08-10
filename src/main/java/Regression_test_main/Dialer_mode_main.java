@@ -151,6 +151,13 @@ public class Dialer_mode_main extends Baseclass {
 	@FindBy(xpath="//li[contains(text(),'Enabled')]")
 	WebElement Enabled;
 	
+	@FindBy(xpath="(//td[@class='my-list-listname'])[1]")
+	WebElement Listname;
+	
+			
+			@FindBy(xpath="(//li)[76]")
+			WebElement Listname1;
+	
 	
 	
 	public Dialer_mode_main(WebDriver driver) {
@@ -246,6 +253,7 @@ public class Dialer_mode_main extends Baseclass {
 		
 		action.moveToElement(SearchBtn).click().build().perform();
 		Thread.sleep(3000);
+		String listname = Listname.getText();
 		action.moveToElement(list).click().build().perform();
 		action.moveToElement(Begindialing).click().build().perform();
 		Thread.sleep(8000);
@@ -296,12 +304,12 @@ public class Dialer_mode_main extends Baseclass {
 			 Thread.sleep(3000);
 			 action.moveToElement(Dialermode).click().build().perform();
 				Thread.sleep(3000);
-				action.moveToElement(currentlist).click().build().perform();
-				Thread.sleep(5000);
-				action.moveToElement(Settingssummary).click().build().perform();
-				Thread.sleep(5000);
 				JavascriptExecutor jse1 = (JavascriptExecutor)driver;   
 				jse1.executeScript("scroll(0, 250)");
+				action.moveToElement(Settingssummary).click().build().perform();
+				Thread.sleep(5000);
+				JavascriptExecutor jse2 = (JavascriptExecutor)driver;   
+				jse2.executeScript("scroll(0, 250)");
 				Assert.assertTrue(Enabled.isDisplayed());
 		 }
 		 else {
@@ -315,13 +323,14 @@ public class Dialer_mode_main extends Baseclass {
 			 Thread.sleep(3000);
 			 action.moveToElement(Dialermode).click().build().perform();
 				Thread.sleep(3000);
-				action.moveToElement(currentlist).click().build().perform();
-				Thread.sleep(5000);
+				JavascriptExecutor jse = (JavascriptExecutor)driver;   
+				jse.executeScript("scroll(0, 250)");
 				action.moveToElement(Settingssummary).click().build().perform();
 				Thread.sleep(5000);
 				JavascriptExecutor jse1 = (JavascriptExecutor)driver;   
 				jse1.executeScript("scroll(0, 250)");
 				Assert.assertTrue(Enabled.isDisplayed());
+				
 		 }
 		 
 	 }
