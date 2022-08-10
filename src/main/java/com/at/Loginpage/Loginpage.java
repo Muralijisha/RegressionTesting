@@ -18,7 +18,7 @@ public class Loginpage extends Baseclass {
 	@FindBy(id = "btn_salesforce")
 	WebElement signInWithSalesforce;
 
-	@FindBy(id = "username")
+	@FindBy(xpath = "//input[contains(@id,'username')]")
 	WebElement username;
 
 	@FindBy(id = "password")
@@ -29,16 +29,21 @@ public class Loginpage extends Baseclass {
 
 	@FindBy(xpath = "//span[contains(text(),'Settings')]")
 	WebElement settingsTab;
+	
+	@FindBy(id="remember_close")
+	WebElement Closepopup;
 
 	public Loginpage() {
 		PageFactory.initElements(driver, this);
 	}
 
 	@Step("Login with username: {0}, password: {1} step :")
-	public HomePage login(String un, String pwd) {
-
+	public HomePage login(String un, String pwd) throws InterruptedException {
 
 		signInWithSalesforce.click();
+	//	Closepopup.click();
+	//	signInWithSalesforce.click();
+		
 		username.sendKeys(un);
 		password.sendKeys(pwd);
 		jsExecutor_ClickElement(loginBtn);

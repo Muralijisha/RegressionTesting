@@ -18,6 +18,12 @@
             <scope>test</scope>
 </dependency>
 
+<dependency>
+  <groupId>org.apache.poi</groupId>
+  <artifactId>poi</artifactId>
+  <version>5.0.0</version>
+</dependency>
+
 <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 <dependency>
     <groupId>javax.mail</groupId>
