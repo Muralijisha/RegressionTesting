@@ -101,7 +101,7 @@ public class Baseclass {
 
 	@SuppressWarnings("deprecation")
 	public static void explicitWait(WebDriver driver, int timeout, WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, 20);
+		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 

@@ -42,7 +42,6 @@ public class Loginpage extends Baseclass {
 
 		signInWithSalesforce.click();
 	//	Closepopup.click();
-	//	signInWithSalesforce.click();
 		
 		username.sendKeys(un);
 		password.sendKeys(pwd);

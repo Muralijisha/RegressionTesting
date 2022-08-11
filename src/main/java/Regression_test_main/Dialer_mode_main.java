@@ -206,9 +206,10 @@ public class Dialer_mode_main extends Baseclass {
 }
 	 
 	 public void statistics() throws InterruptedException {
+		 driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		 Actions action = new Actions(driver);
 		 action.moveToElement(MyLists).click().build().perform();
-		Thread.sleep(3000);
+	//	Thread.sleep(3000);
 /*		Addlists.click();
 		Addfromcsv.click();
 		Fileupload.sendKeys("D:\\Automation\\TestAutomation\\Murali List1.csv");
@@ -253,12 +254,15 @@ public class Dialer_mode_main extends Baseclass {
 		
 		action.moveToElement(SearchBtn).click().build().perform();
 		Thread.sleep(3000);
-		String listname = Listname.getText();
+	//	String listname = Listname.getText();
 		action.moveToElement(list).click().build().perform();
 		action.moveToElement(Begindialing).click().build().perform();
-		Thread.sleep(8000);
+	//	Thread.sleep(10000);
+		WebDriverWait wait = new WebDriverWait(driver,30);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//b)[last()]")));
 		String Prospectscount=Prospects.getText();
-		
+		WebDriverWait wait1 = new WebDriverWait(driver,30);
+        wait1.until(ExpectedConditions.visibilityOfElementLocated(By.id("btnContinueToSession")));
 				    
 		action.moveToElement(Continue).click().build().perform();
 		Thread.sleep(5000);
@@ -292,41 +296,30 @@ public class Dialer_mode_main extends Baseclass {
 	 }
 	 
 	 public void settingssummary() throws InterruptedException {
+		 driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		 Actions action = new Actions(driver);
 		 action.moveToElement(Settings).click().build().perform();
-		 Thread.sleep(5000);
 		 if(Autoopen.isSelected()) {
 			 action.moveToElement(Savesettings).click().build().perform();
-			 Thread.sleep(3000);
 			 action.moveToElement(OK).click().build().perform();
-			 Thread.sleep(3000);
 			 action.moveToElement(Mysession).click().build().perform();
-			 Thread.sleep(3000);
 			 action.moveToElement(Dialermode).click().build().perform();
-				Thread.sleep(3000);
 				JavascriptExecutor jse1 = (JavascriptExecutor)driver;   
 				jse1.executeScript("scroll(0, 250)");
 				action.moveToElement(Settingssummary).click().build().perform();
-				Thread.sleep(5000);
 				JavascriptExecutor jse2 = (JavascriptExecutor)driver;   
 				jse2.executeScript("scroll(0, 250)");
 				Assert.assertTrue(Enabled.isDisplayed());
 		 }
 		 else {
 			 action.moveToElement(Autoopen).click().build().perform();
-			 Thread.sleep(2000);
 			 action.moveToElement(Savesettings).click().build().perform();
-			 Thread.sleep(3000);
 			 action.moveToElement(OK).click().build().perform();
-			 Thread.sleep(3000);
 			 action.moveToElement(Mysession).click().build().perform();
-			 Thread.sleep(3000);
 			 action.moveToElement(Dialermode).click().build().perform();
-				Thread.sleep(3000);
 				JavascriptExecutor jse = (JavascriptExecutor)driver;   
 				jse.executeScript("scroll(0, 250)");
 				action.moveToElement(Settingssummary).click().build().perform();
-				Thread.sleep(5000);
 				JavascriptExecutor jse1 = (JavascriptExecutor)driver;   
 				jse1.executeScript("scroll(0, 250)");
 				Assert.assertTrue(Enabled.isDisplayed());
