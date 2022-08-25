@@ -1,7 +1,6 @@
 package Regression_test_main;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -11,7 +10,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -28,6 +26,12 @@ public class Dialer_mode_main extends Baseclass {
 	@FindBy(xpath = "//span[text()='Agent Assisted Dialer']")
 	WebElement AAD;
 
+	@FindBy(xpath = "//span[contains(text(),'AI Flow Dialer')]")
+	WebElement AIDSL;
+
+	@FindBy(xpath = "//span[contains(text(),'AI Parallel Dialer')]")
+	WebElement AIDML;
+
 	@FindBy(id = "mysession_dialer_mode")
 	WebElement Dialermode;
 
@@ -36,6 +40,12 @@ public class Dialer_mode_main extends Baseclass {
 
 	@FindBy(xpath = "//div[@class='team']")
 	WebElement Agent;
+
+	@FindBy(xpath = "//div[@class='aisl']")
+	WebElement SingleLine;
+
+	@FindBy(xpath = "//div[@class='aiml']")
+	WebElement MultiLine;
 
 	@FindBy(xpath = "//a[contains(text(),'My Lists')]")
 	WebElement MyLists;
@@ -157,6 +167,48 @@ public class Dialer_mode_main extends Baseclass {
 	@FindBy(xpath = "(//li)[76]")
 	WebElement Listname1;
 
+	@FindBy(xpath = "//a[contains(text(),' Delete Existing Records')]")
+	WebElement DeleteList;
+
+	@FindBy(xpath = "//p[contains(text(),'No data available for dialing. Please upload.')]")
+	WebElement NoData;
+
+	@FindBy(xpath = "(//button[contains(text(),'Cancel')])[3]")
+	WebElement Cancel;
+
+	@FindBy(xpath = "//a[text()='Parking Lot']")
+	WebElement ParkingLot;
+
+	@FindBy(xpath = "//a[text()='Administration']")
+	WebElement Administration;
+
+	@FindBy(xpath = "//input[@id='select_all_parking_lot_records']")
+	WebElement SelectAll;
+
+	@FindBy(xpath = "//div[@onclick='deleteSelectedParkingLotRecords()']")
+	WebElement DeleteRecords;
+
+	@FindBy(xpath = "//div[@id='no_parking_lot_records_list']")
+	WebElement NoRecords;
+
+	@FindBy(xpath = "((//tr[@class='whiterow active-green-tick'])[1]//td[@class='la'])[2]")
+	WebElement FirstRow;
+
+	@FindBy(xpath = "//tr[@id='drdt1_sf_report_name']//td[@class='value']")
+	WebElement ReportName;
+
+	@FindBy(xpath = "//div[@id='customerdetails_window_save']")
+	WebElement Save;
+
+	@FindBy(xpath = "//div[@class='control-sections settings-summary']//li[7]")
+	WebElement DialerModeListnames;
+
+	@FindBy(xpath = "(//button[contains(text(),'OK')])[3]")
+	WebElement SaveOK;
+
+	@FindBy(xpath = "//p[contains(text(),'All contacts who are unchecked')]")
+	WebElement Warning;
+
 	public Dialer_mode_main(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -164,66 +216,92 @@ public class Dialer_mode_main extends Baseclass {
 
 	WebDriver driver;
 
-	@SuppressWarnings("deprecation")
-	public void FlowAndAAD() throws InterruptedException {
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+	public void SwitchingDialerMode() throws InterruptedException {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[text()='My Session']")));
 
 		Actions action = new Actions(driver);
 		action.moveToElement(Mysession).click().build().perform();
 		Thread.sleep(3000);
 
-		// List<WebElement> dynamicElement =
-		// driver.findElements(By.xpath("//div[@class='personal']"));
-
-		// WebElement dynamicElement =
-		// driver.findElement(By.xpath("//div[@class='personal']"));
-
 		if (driver.findElements(By.xpath("//div[@class='personal']")).size() != 0) {
 			action.moveToElement(Dialermode).click().build().perform();
 			action.moveToElement(AAD).click().build().perform();
 			Boolean x = Agent.isDisplayed();
 			Assert.assertTrue(x);
+			System.out.println("Switching Agent Assisted Dialer works perfectly");
+
+			Thread.sleep(3000);
 			action.moveToElement(Dialermode).click().build().perform();
 			action.moveToElement(FD).click().build().perform();
 			Boolean y = Flow.isDisplayed();
 			Assert.assertTrue(y);
+			System.out.println("Switching Flow Dialer works perfectly");
+			Thread.sleep(3000);
+			action.moveToElement(Dialermode).click().build().perform();
+			action.moveToElement(AIDSL).click().build().perform();
+			Boolean a = SingleLine.isDisplayed();
+			Assert.assertTrue(a);
+			System.out.println("Switching AI Dialer Single Line works perfectly");
+			Thread.sleep(3000);
+			action.moveToElement(Dialermode).click().build().perform();
+			action.moveToElement(AIDML).click().build().perform();
+			Boolean b = MultiLine.isDisplayed();
+			Assert.assertTrue(b);
+			System.out.println("Switching AI Dialer Multi Line works perfectly");
 		} else {
 			action.moveToElement(Dialermode).click().build().perform();
 			action.moveToElement(FD).click().build().perform();
 			Boolean y = Flow.isDisplayed();
 			Assert.assertTrue(y);
+			System.out.println("Switching Flow Dialer works perfectly");
+			Thread.sleep(3000);
 			action.moveToElement(Dialermode).click().build().perform();
 			action.moveToElement(AAD).click().build().perform();
 			Boolean x = Agent.isDisplayed();
 			Assert.assertTrue(x);
+			System.out.println("Switching Agent Assisted Dialer works perfectly");
+			Thread.sleep(3000);
+			action.moveToElement(Dialermode).click().build().perform();
+			action.moveToElement(AIDSL).click().build().perform();
+			Boolean a = SingleLine.isDisplayed();
+			Assert.assertTrue(a);
+			System.out.println("Switching AI Dialer Single Line works perfectly");
+			Thread.sleep(3000);
+			action.moveToElement(Dialermode).click().build().perform();
+			action.moveToElement(AIDML).click().build().perform();
+			Boolean b = MultiLine.isDisplayed();
+			Assert.assertTrue(b);
+			System.out.println("Switching AI Dialer Multi Line works perfectly");
 		}
 
 	}
 
 	public void statistics() throws InterruptedException {
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 		Actions action = new Actions(driver);
+		action.moveToElement(Administration).click().build().perform();
+		Thread.sleep(2000);
+		action.moveToElement(ParkingLot).click().build().perform();
+		Thread.sleep(2000);
+
+		if (NoRecords.isDisplayed()) {
+
+		} else {
+			action.moveToElement(SelectAll).click().build().perform();
+			Thread.sleep(2000);
+			action.moveToElement(DeleteRecords).click().build().perform();
+			Thread.sleep(2000);
+			action.moveToElement(OK).click().build().perform();
+			Thread.sleep(2000);
+			action.moveToElement(OK).click().build().perform();
+			Thread.sleep(3000);
+		}
+
 		action.moveToElement(MyLists).click().build().perform();
-		// Thread.sleep(3000);
-		/*
-		 * Addlists.click(); Addfromcsv.click();
-		 * Fileupload.sendKeys("D:\\Automation\\TestAutomation\\Murali List1.csv");
-		 * Thread.sleep(3000); OK.click(); Thread.sleep(3000); JavascriptExecutor jse1 =
-		 * (JavascriptExecutor)driver; jse1.executeScript("scroll(0, 250)");
-		 * Next.click(); Thread.sleep(3000); WebElement dropdown = Callerid;
-		 * dropdown.click(); Select drop = new Select(dropdown);
-		 * drop.selectByVisibleText("Random"); Thread.sleep(2000); Est.click();
-		 * Cst.click(); Mst.click(); Pst.click(); Thread.sleep(2000); JavascriptExecutor
-		 * jse2 = (JavascriptExecutor)driver; jse2.executeScript("scroll(0, 250)");
-		 * Next1.click(); Thread.sleep(3000); Ok.click(); // Thread.sleep(4000);
-		 * JavascriptExecutor jse3 = (JavascriptExecutor)driver;
-		 * jse3.executeScript("scroll(0, 250)"); Thread.sleep(2000); Next2.click();
-		 * Thread.sleep(6000); // Ok.click(); Next3.click(); Thread.sleep(4000);
-		 * Ok.click(); Next3.click(); Thread.sleep(3000); Close.click();
-		 * Thread.sleep(5000);
-		 */
+		Thread.sleep(3000);
+
 		Search.sendKeys(prop.getProperty("listname"));
 
 		action.moveToElement(SearchBtn).click().build().perform();
@@ -232,10 +310,10 @@ public class Dialer_mode_main extends Baseclass {
 		action.moveToElement(list).click().build().perform();
 		action.moveToElement(Begindialing).click().build().perform();
 		// Thread.sleep(10000);
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//b)[last()]")));
 		String Prospectscount = Prospects.getText();
-		WebDriverWait wait1 = new WebDriverWait(driver, 30);
+		WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.id("btnContinueToSession")));
 
 		action.moveToElement(Continue).click().build().perform();
@@ -246,12 +324,16 @@ public class Dialer_mode_main extends Baseclass {
 		// action.doubleClick(CheckallYes).perform();
 		action.moveToElement(CheckallYes).click().build().perform();
 		Thread.sleep(5000);
+		if (driver.findElements(By.xpath("//p[contains(text(),'All contacts who are unchecked')]")).size() != 0) {
+			Thread.sleep(3000);
+			action.moveToElement(CheckallYes).click().build().perform();
+		}
 		action.moveToElement(Checkbox1).click().build().perform();
 		action.moveToElement(Checkbox2).click().build().perform();
 		Thread.sleep(3000);
-		Donotcallforever.click();
+		action.moveToElement(Donotcallforever).click().build().perform();
 		Thread.sleep(3000);
-		DonotOk.click();
+		action.moveToElement(DonotOk).click().build().perform();
 		Thread.sleep(3000);
 
 		Mysession.click();
@@ -266,42 +348,84 @@ public class Dialer_mode_main extends Baseclass {
 		String uncheck = "2";
 		String count = Uncheckcount.getText();
 		Assert.assertTrue(count.contains(uncheck));
+		System.out.println("Current List Statistics working perfectly");
 
 	}
 
 	public void settingssummary() throws InterruptedException {
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		Actions action = new Actions(driver);
 		action.moveToElement(Settings).click().build().perform();
 		if (Autoopen.isSelected()) {
-			action.moveToElement(Savesettings).click().build().perform();
-			action.moveToElement(OK).click().build().perform();
-			action.moveToElement(Mysession).click().build().perform();
-			action.moveToElement(Dialermode).click().build().perform();
-			JavascriptExecutor jse1 = (JavascriptExecutor) driver;
-			jse1.executeScript("scroll(0, 250)");
-			action.moveToElement(Settingssummary).click().build().perform();
-			Thread.sleep(2000);
-			JavascriptExecutor jse2 = (JavascriptExecutor) driver;
-			jse2.executeScript("scroll(0, 250)");
-			Thread.sleep(2000);
-			Assert.assertTrue(Enabled.isDisplayed());
+
 		} else {
 			action.moveToElement(Autoopen).click().build().perform();
 			action.moveToElement(Savesettings).click().build().perform();
 			action.moveToElement(OK).click().build().perform();
-			action.moveToElement(Mysession).click().build().perform();
-			action.moveToElement(Dialermode).click().build().perform();
-			JavascriptExecutor jse = (JavascriptExecutor) driver;
-			jse.executeScript("scroll(0, 250)");
-			action.moveToElement(Settingssummary).click().build().perform();
-			Thread.sleep(2000);
-			JavascriptExecutor jse1 = (JavascriptExecutor) driver;
-			jse1.executeScript("scroll(0, 250)");
-			Thread.sleep(2000);
-			Assert.assertTrue(Enabled.isDisplayed());
+			Thread.sleep(5000);
 
 		}
+		action.moveToElement(Mysession).click().build().perform();
+		Thread.sleep(5000);
+		action.moveToElement(FirstRow).click().build().perform();
+		// action.doubleClick(FirstRow).perform();
+		Thread.sleep(3000);
+		String Name = ReportName.getText();
+		Thread.sleep(3000);
+		action.moveToElement(Save).click().build().perform();
+		Thread.sleep(2000);
+		action.moveToElement(SaveOK).click().build().perform();
+		Thread.sleep(3000);
+		action.moveToElement(Dialermode).click().build().perform();
+		Thread.sleep(3000);
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript("scroll(0, 250)");
+		action.moveToElement(Settingssummary).click().build().perform();
+		Thread.sleep(2000);
+		JavascriptExecutor jse1 = (JavascriptExecutor) driver;
+		jse1.executeScript("scroll(0, 250)");
+		Thread.sleep(2000);
+		String Listnames = DialerModeListnames.getText();
+		System.out.println(Listnames);
+		Assert.assertTrue(Listnames.contains(Name));
+		Thread.sleep(2000);
+		Assert.assertTrue(Enabled.isDisplayed());
+		System.out.println();
+		System.out.println("Settings Summary working properly");
+		System.out.println();
+		System.out.println("List Names and Auto Open CRM Settings are updating Properly in Settings Summary");
+		System.out.println();
+		driver.navigate().refresh();
+
+	}
+
+	public void Delete_Existing_Lists() throws InterruptedException {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		Actions action = new Actions(driver);
+		action.moveToElement(Mysession).click().build().perform();
+		Thread.sleep(5000);
+		action.moveToElement(Dialermode).click().build().perform();
+		Thread.sleep(3000);
+		JavascriptExecutor jse1 = (JavascriptExecutor) driver;
+		jse1.executeScript("scroll(0, 250)");
+		action.moveToElement(DeleteList).click().build().perform();
+		Thread.sleep(2000);
+		action.moveToElement(Cancel).click().build().perform();
+		Thread.sleep(2000);
+		System.out.println();
+		System.out.println("Cancel button is working fine for Delete Existing Lists");
+		Thread.sleep(2000);
+		action.moveToElement(Dialermode).click().build().perform();
+		Thread.sleep(3000);
+		JavascriptExecutor jse2 = (JavascriptExecutor) driver;
+		jse2.executeScript("scroll(0, 250)");
+		action.moveToElement(DeleteList).click().build().perform();
+		Thread.sleep(2000);
+		action.moveToElement(DonotOk).click().build().perform();
+		Thread.sleep(5000);
+		Assert.assertTrue(NoData.isDisplayed());
+		System.out.println();
+		System.out.println("Records Deleted Successfully");
 
 	}
 }

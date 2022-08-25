@@ -3,9 +3,8 @@ package Baseclass;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.NoSuchElementException;
+import java.time.Duration;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -13,18 +12,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Baseclass {
 	
 	public static Properties prop;
 	public static WebDriver driver;
-	public static EventFiringWebDriver e_driver;
+//	public static EventFiringWebDriver e_driver;
 	
 	public static ThreadLocal<WebDriver> tdriver = new ThreadLocal<WebDriver>();
 
@@ -53,11 +49,11 @@ public class Baseclass {
 			driver = new FirefoxDriver();
 		}
 
-		e_driver = new EventFiringWebDriver(driver);
+//		e_driver = new EventFiringWebDriver(driver);
 		// Now create object of EventListerHandler to register it with
 		// EventFiringWebDriver
 		
-		driver = e_driver;
+	//	driver = e_driver;
 
 		driver.manage().deleteAllCookies();
 		driver.manage().window().maximize();
@@ -76,20 +72,21 @@ public class Baseclass {
 			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\chromedriver.exe");
 			driver = new ChromeDriver();
 		} else if (browserName.equals("FF")) {
-			System.setProperty("webdriver.gecko.driver", "/Users/naveenkhunteta/Documents/SeleniumServer/geckodriver");
+			System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "\\geckodriver.exe");
 			driver = new FirefoxDriver();
 		}
+		
 
-		e_driver = new EventFiringWebDriver(driver);
+	//	e_driver = new EventFiringWebDriver(driver);
 		// Now create object of EventListerHandler to register it with
 		// EventFiringWebDriver
 		
-		driver = e_driver;
+	//	driver = e_driver;
 
 		driver.manage().deleteAllCookies();
 		driver.manage().window().maximize();
 		
-		driver.get(prop.getProperty("url1"));
+		driver.get(prop.getProperty("Baseappurl"));
 
 		tdriver.set(driver);
 		return getDriver();
@@ -99,15 +96,15 @@ public class Baseclass {
 		return tdriver.get();
 	}
 
-	@SuppressWarnings("deprecation")
+	
 	public static void explicitWait(WebDriver driver, int timeout, WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
-	@SuppressWarnings("deprecation")
+	
 	public static void explicitWaitAlert(WebDriver driver, int timeout) {
-		WebDriverWait wait = new WebDriverWait(driver, 20);
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.alertIsPresent());
 	}
 
@@ -129,12 +126,12 @@ public class Baseclass {
 	
 
 	public static void explicitWait_Clickable(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, 15);
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
 	public static void elementClickable(WebElement element) {
-		WebElement scanEle = new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(element));
+		WebElement scanEle = new WebDriverWait(driver,Duration.ofSeconds(30)).until(ExpectedConditions.elementToBeClickable(element));
 		Actions action = new Actions(driver);
 		action.moveToElement(scanEle).click().build().perform();
 	}

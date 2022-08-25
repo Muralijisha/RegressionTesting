@@ -1,10 +1,9 @@
 package com.at.Loginpage;
 
-
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 
 import Baseclass.Baseclass;
 import io.qameta.allure.Step;
@@ -14,7 +13,6 @@ public class Loginpage extends Baseclass {
 	HomePage homepage;
 
 	
-
 	@FindBy(id = "btn_salesforce")
 	WebElement signInWithSalesforce;
 
@@ -29,9 +27,12 @@ public class Loginpage extends Baseclass {
 
 	@FindBy(xpath = "//span[contains(text(),'Settings')]")
 	WebElement settingsTab;
-	
-	@FindBy(id="remember_close")
+
+	@FindBy(id = "remember_close")
 	WebElement Closepopup;
+
+	@FindBy(id = "remember_choice_form")
+	WebElement Closepopuppage;
 
 	public Loginpage() {
 		PageFactory.initElements(driver, this);
@@ -41,8 +42,10 @@ public class Loginpage extends Baseclass {
 	public HomePage login(String un, String pwd) throws InterruptedException {
 
 		signInWithSalesforce.click();
-	//	Closepopup.click();
-		
+
+		if (driver.findElements(By.id("remember_choice_form")).size() != 0) {
+			Closepopup.click();
+		}
 		username.sendKeys(un);
 		password.sendKeys(pwd);
 		jsExecutor_ClickElement(loginBtn);
